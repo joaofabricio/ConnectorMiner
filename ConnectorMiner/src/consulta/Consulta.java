@@ -1,5 +1,6 @@
 package consulta;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public abstract class Consulta {
 	protected static final String CARACTER_PARAM = "\\\\#";
 	
 	public String getSQL() {
-		return FileUtils.getConteudoArquivo(this.getClass().getSimpleName());
+		return FileUtils.getConteudoArquivo("consultas"+File.separator+this.getClass().getSimpleName());
 	}
 	
 	protected abstract String[] getParametros();
