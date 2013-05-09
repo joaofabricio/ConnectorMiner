@@ -1,0 +1,11 @@
+select f.filename, count(f.filename) from gitcommitfile as f where f.repositorycommit_id in ( 
+	select c.id from gitrepositorycommit as c where id in ( 
+		select pc.repositorycommits_id from gitpullrequest_gitrepositorycommit as pc where pc.entitypullrequest_id in 
+		( 
+			select p.id from gitpullrequest as p where p.createdat between '#' and '#' 
+		) 
+	) 
+) 
+and (f.filename like 'src/%' or f.filename not like '%/%' and f.filename not like '.%' and f.filename like '%.%') 
+group by f.filename 
+order by count(f.filename) desc

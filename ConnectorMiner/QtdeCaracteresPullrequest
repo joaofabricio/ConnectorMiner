@@ -1,0 +1,11 @@
+select f.filename, sum(length(p.body)) from gitcommitfile as f, 
+				  gitpullrequest as p, 
+				  gitrepositorycommit as c, 
+				  gitpullrequest_gitrepositorycommit as pc 
+			where p.createdat between '#' and '#'
+			  and f.repositorycommit_id=c.id
+			  and c.id=pc.repositorycommits_id
+			  and p.id=pc.entitypullrequest_id
+and (f.filename like 'src/%' or f.filename not like '%/%' and f.filename not like '.%' and f.filename like '%.%') 
+group by f.filename 
+order by count(f.filename) desc
